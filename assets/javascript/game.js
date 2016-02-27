@@ -40,8 +40,9 @@ function initiateGame(){
 /*	console.log($(this).text());*/
 	$(this).detach();
 	$("#player-panel").html($(this).show("slow"));
-	$(this).addClass("player");
-	$(".character-container").off("click");
+	// $(this).addClass("player");
+	$("#enemy-panel").html($("#character-panel").html());
+	$("#character-panel").remove();
 
 
 
@@ -66,23 +67,27 @@ function doBattle(playerCharacter, enemyCharacter){
 	}
 }
 function stageBattle(){
-	console.log("made it to stage battle")
+	console.log("made it to stage battle");
 	$(this).detach();
 	$("#defender-panel").html($(this).show("slow"));
 }
 function restart(){
-	reload();
+	location.reload();
 }
 
-for (var i = 0; i < characters.length; i++){
-	var charBuilder = $('<div class="character-container" id=' + String(characters[i]) + '><header>' + characters[i].name + '</header><img class="character" src=' + characters[i].image + '><footer>' + characters[i].healthPoints + '</footer></div>');
-	console.log(charBuilder);
-}
+// var characterPanelBuilder = function(){
+// 	console.log("called characterPanelBuilder")
+// 	for (var i = 0; i < characters.length; i++){
+// 		var charBuilder = $('<div class="character-container" id=' + String(characters[i]) + '></div>').html('<header>' + characters[i].name + '</header><img class="character" src=' + characters[i].image + '<footer>' + characters[i].healthPoints + '</footer>');
+// 		console.log(charBuilder);
+// 		$(".character-panel").append(charBuilder);
+// 	}
+// }
+// characterPanelBuilder();
+$("#character-panel > .character-container").click(initiateGame);
 
-$(".character-container").click(initiateGame);
-$(".player-panel").html($);
-$("#enemy-panel").html($("#character-panel").addClass("enemy"));
-$(".enemy").click(stageBattle);
+// $("#enemy-panel").html($("#character-panel").addClass("enemy"));
+$("#enemy-panel > .character-container").click(stageBattle);
 // $(".character-container").off("click");
 
 //player chooses a character as their own
