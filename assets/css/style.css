@@ -1,0 +1,43 @@
+body{
+/*	background-image: url("assets/images/star_wars_xwing.jpg");*/
+	background-image: url("../images/star_wars_xwing.jpg");
+	background-size: 100%;
+}
+h1{
+	float:right;
+	font-family: 'Audiowide', cursive;
+	font-size: 25px;
+	letter-spacing: 2px;
+	padding-right: 110px;
+	padding-top: 10px;
+
+}
+h2{
+	font-family: 'Audiowide', cursive;
+	font-size: 15px;
+	letter-spacing: 2px;
+}
+
+.character{
+	width: 100px;
+	height: 50px;
+}
+.character-container{
+	background-color: white;
+	font-family: 'Audiowide', cursive;
+	font-size: 10px;
+	width: 120px;
+	text-align: center;
+	border-color: green;
+	border-style: solid;
+	border-width: 2px;
+	display: inline-block;
+}
+.character-container:hover{
+	background-color: purple;
+}
+
+.character-container:active{
+	background-color: green;
+}
+

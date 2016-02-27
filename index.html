@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Star Wars RPG</title> 
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+	<link href='https://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+</head>
+<body>
+	<div class="container">
+		<h1>Star Wars RPG!</h1><br>
+		<div id="character-panel">
+			<div class="character-container" id="obi-wan"><header>Obi-Wan Kenobi</header><img class="character" src="assets/images/obi-wan.jpg"><footer>120</footer></div>
+			<div class="character-container" id="luke-skywalker"><header>Luke Skywalker</header><img class="character" src="assets/images/luke-skywalker.jpg"><footer>100</footer></div>
+			<div class="character-container" id="darth-sidious"><header>Darth Sidious</header><img class="character" src="assets/images/darth-sidious.png"><footer>110</footer></div>
+			<div class="character-container"  id="darth-maul"><header>Darth Maul</header><img class="character" src="assets/images/darth-maul.jpg"><footer>130</footer></div>
+		</div>
+
+
+		<h2>Your Character</h2>
+		<div id="player-panel">
+		player panel goes here
+		</div>
+		<h2>Enemies Available to Attack</h2>
+		<div id="enemy-panel">
+		enemy characters go here
+		</div>
+		<h2>Fight Section</h2>
+		<button id="attack">Attack</button>
+		<h2>Defender</h2>
+		<div id="defender-panel">
+		defender panel goes here
+		</div>
+	</div>
+	<script src="assets/javascript/game.js"></script>
+</body>
+</html>
