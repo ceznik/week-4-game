@@ -37,63 +37,61 @@ var characters={
 	//move selected character to player panel
 	//move remaining characters to enemy panel
 function initiateGame(){
-/*	console.log($(this).text());*/
-	$(this).detach();
+	console.log($(this).text());
+	$(this).remove();
 	$("#player-panel").html($(this).show("slow"));
-	// $(this).addClass("player");
+	$("#player-panel").children().addClass("player-character");
 	$("#enemy-panel").html($("#character-panel").html());
+	$("#enemy-panel").children().addClass("enemies");
 	$("#character-panel").remove();
+	$(".character-container").unbind();
+
+	console.log($("#enemy-panel").html());
+
+	$(".enemies").on('click',stageBattle);
+
+	function stageBattle(){
+		alert("stageBattle");
+		console.log($(this).text());
+		$(this).remove();
+		$("#defender-panel").html($(this).show("slow"));
+		console.log($('#defender-panel').children().attr('id'));
+	
+
+		$("#attack").click(doBattle($(".player-character").attr('id')),$('#defender-panel').children().attr('id'));
+
+		function doBattle(playerCharacter, enemyCharacter){
+			var battleMultiplier = playerCharacter.attackPower;
+			do {
+				characters.enemyCharacter.healthPoints-=characters.playerCharacter.attackPower;
+				playerCharacter.healthPoints-=enemyCharacter.attackPower;
+				playerCharacter.attackPower+=battleMultiplier;
+			}
+			while(enemyCharacter.healthPoints > 0 && playerCharacter.healthPoints > 0);
+
+			if (enemyCharacter.healthPoints == 0) {
+				alert("enemy defeated");
+				//remove enemy from defender area and prompt for new enemy
+			}
+			else{
+				alert("you lost");
+			}
+		}
 
 
+	}
 
 }
-// alert("game initiated");
 
-function doBattle(playerCharacter, enemyCharacter){
-	var battleMultiplier = playerCharacter.attackPower;
-	do {
-		enemyCharacter.healthPoints-=playerCharacter.attackPower;
-		playerCharacter.healthPoints-=enemyCharacter.attackPower;
-		playerCharacter.attackPower+=battleMultiplier;
-	}
-	while(enemyCharacter.healthPoints > 0 && playerCharacter.healthPoints > 0);
 
-	if (enemyCharacter.healthPoints == 0) {
-		alert("enemy defeated");
-		//remove enemy from defender area and prompt for new enemy
-	}
-	else{
-		alert("you lost");
-	}
-}
-function stageBattle(){
-	console.log("made it to stage battle");
-	$(this).detach();
-	$("#defender-panel").html($(this).show("slow"));
-}
 function restart(){
 	location.reload();
 }
 
-// var characterPanelBuilder = function(){
-// 	console.log("called characterPanelBuilder")
-// 	for (var i = 0; i < characters.length; i++){
-// 		var charBuilder = $('<div class="character-container" id=' + String(characters[i]) + '></div>').html('<header>' + characters[i].name + '</header><img class="character" src=' + characters[i].image + '<footer>' + characters[i].healthPoints + '</footer>');
-// 		console.log(charBuilder);
-// 		$(".character-panel").append(charBuilder);
-// 	}
-// }
-// characterPanelBuilder();
-$("#character-panel > .character-container").click(initiateGame);
+$(".character-container").click(initiateGame);
 
-// $("#enemy-panel").html($("#character-panel").addClass("enemy"));
-$("#enemy-panel > .character-container").click(stageBattle);
-// $(".character-container").off("click");
 
-//player chooses a character as their own
-
-//player then chooses a character from the enemy panel to go battle with until there are no more enemies
-$("#attack").click(doBattle);
-$("#restart").click(restart);
+// $("#enemy-panel").delegate('.character-container', 'click', stageBattle);
+// $("#restart").click(restart);
 
 })//program close
