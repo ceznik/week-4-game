@@ -7,41 +7,44 @@ var characters={
 		name:"Obi-Wan Kenobi",
 		image:"../images/obi-wan.jpg",
 		healthPoints:100,
-		attackPower:10,
+		attackPower:20,
 		counterAttackPower:25
 	},
 	'luke-skywalker':{
 		name:"Luke Skywalker",
 		image:"../images/luke-skywalker.jpg",
-		healthPoints:100,
-		attackPower:10,
-		counterAttackPower:25
+		healthPoints:120,
+		attackPower:30,
+		counterAttackPower:45
 	},
 	'darth-sidious':{
 		name:"Darth Sidious",
 		image:"../images/darth-sidious.png",
-		healthPoints:100,
-		attackPower:10,
+		healthPoints:110,
+		attackPower:40,
 		counterAttackPower:25
 	},
 	'darth-maul':{
 		name:"Darth Maul",
 		image:"../images/darth-maul.jpg",
-		healthPoints:100,
-		attackPower:10,
+		healthPoints:120,
+		attackPower:25,
 		counterAttackPower:25
 	},
-};
+}
 
+$('#obi-wan').find('#health-points').html(characters['obi-wan'].healthPoints);
+$('#luke-skywalker').find('#health-points').html(characters['luke-skywalker'].healthPoints);
+$('#darth-sidious').find('#health-points').html(characters['darth-sidious'].healthPoints);
+$('#darth-maul').find('#health-points').html(characters['darth-maul'].healthPoints);
 
-	//move selected character to player panel
-	//move remaining characters to enemy panel
 function initiateGame(){
-	console.log($(this).text());
-	$(this).remove();
-	$("#player-panel").html($(this).show("slow"));
+	// console.log($(this).text());
+	
+	$(this).remove().effect('blind');
+	$("#player-panel").html($(this).show('slow'));
 	$("#player-panel").children().addClass("player-character");
-	$("#enemy-panel").html($("#character-panel").html());
+	$("#enemy-panel").append($("#character-panel").html()).show('slow');
 	$("#enemy-panel").children().addClass("enemies");
 	$("#character-panel").remove();
 	$(".character-container").unbind();
@@ -51,47 +54,46 @@ function initiateGame(){
 	$(".enemies").on('click',stageBattle);
 
 	function stageBattle(){
-		alert("stageBattle");
-		console.log($(this).text());
-		$(this).remove();
-		$("#defender-panel").html($(this).show("slow"));
+		// console.log($(this).text());
+		$(this).remove().effect('blind');
+		$("#defender-panel").html($(this).show('slow'));
 		console.log($('#defender-panel').children().attr('id'));
-	
+		$("#attack").on('click', function (){
+			//alert("Attack!!!");
+			doBattle($(".player-character").attr('id'),$('#defender-panel').children().attr('id'));
+			function doBattle(playerCharacter, enemyCharacter) {
+			    //alert(playerCharacter + " and " + enemyCharacter + " are about to do battle.");
+				var battleMultiplier = characters[playerCharacter].attackPower;
+				console.log("battleMultiplier= " + battleMultiplier);
+				characters[enemyCharacter].healthPoints-=characters[playerCharacter].attackPower;
+				console.log("enemyCharacter: " + characters[enemyCharacter].healthPoints);
+				// $(JSON.stringify("#" + enemyCharacter)).find('#healthPoints').text(characters[enemyCharacter].healthPoints);
+				console.log($("#defender-panel").html());
 
-		$("#attack").click(doBattle($(".player-character").attr('id')),$('#defender-panel').children().attr('id'));
+				characters[playerCharacter].healthPoints-=characters[enemyCharacter].attackPower;
+				console.log("playerCharacter: " + characters[playerCharacter].healthPoints);
+				// $('#' + "'" + playerCharacter + "'").find('#healthPoints').text(characters[playerCharacter].healthPoints);
+				console.log($("#player-panel").html());
+				characters[playerCharacter].attackPower+=battleMultiplier;
 
-		function doBattle(playerCharacter, enemyCharacter){
-			var battleMultiplier = playerCharacter.attackPower;
-			do {
-				characters.enemyCharacter.healthPoints-=characters.playerCharacter.attackPower;
-				playerCharacter.healthPoints-=enemyCharacter.attackPower;
-				playerCharacter.attackPower+=battleMultiplier;
-			}
-			while(enemyCharacter.healthPoints > 0 && playerCharacter.healthPoints > 0);
-
-			if (enemyCharacter.healthPoints == 0) {
-				alert("enemy defeated");
-				//remove enemy from defender area and prompt for new enemy
-			}
-			else{
-				alert("you lost");
-			}
-		}
-
-
-	}
-
-}
+				if (characters[enemyCharacter].healthPoints <= 0) {
+					alert("enemy defeated");
+					//remove enemy from defender area and prompt for new enemy
+					$('#defender-panel').empty().effect('explode');
+				}
+				else if (characters[playerCharacter].healthPoints<=0){
+					alert("you lost");
+					$('#player-panel').empty().effect('explode');
+				}
+			
+			};
+		});
+	}//closes stageBattle
+}//closes initiateGame
 
 
-function restart(){
-	location.reload();
-}
-
-$(".character-container").click(initiateGame);
+//game begins when user selects a character from the character panel.
+$(".character-container").click(initiateGame); 
 
 
-// $("#enemy-panel").delegate('.character-container', 'click', stageBattle);
-// $("#restart").click(restart);
-
-})//program close
+});//program close
